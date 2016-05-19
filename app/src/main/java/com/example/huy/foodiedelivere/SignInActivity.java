@@ -65,7 +65,7 @@ public class SignInActivity extends AppCompatActivity {
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                Toast.makeText(SignInActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(SignInActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
                                 deliverer = new Gson().fromJson(response.toString(), Deliverer.class);
                                 openProfile();
                             }
@@ -85,8 +85,9 @@ public class SignInActivity extends AppCompatActivity {
                 );
 
 
-                RequestQueue requestQueue = VolleySingleton.getIntence().getRequestQueue();
-                requestQueue.add(jsonObjectRequest);
+//                RequestQueue requestQueue = VolleySingleton.getIntence().getRequestQueue();
+//                requestQueue.add(jsonObjectRequest);
+                MySingleton.getInstance().addToRequestQueue(jsonObjectRequest);
             }
         });
 

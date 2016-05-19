@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -20,6 +23,8 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageView imgAvatar;
     private TextView txtFirstname, txtLastname, txtEmail, txtSpreeAPIKey;
     private Deliverer deliverer;
+    private ImageLoader imageLoader;
+    private NetworkImageView networkImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,24 +39,38 @@ public class ProfileActivity extends AppCompatActivity {
     private void loadDeliverer() {
         Intent intent = getIntent();
         deliverer = (Deliverer) intent.getSerializableExtra("Deliverer");
+
+        loadAvatar();
         txtFirstname.setText(deliverer.getFirst_name());
-//        txtFirstname.setText(deliverer.getImages()[0].getLarge_url());
         txtLastname.setText(deliverer.getLast_name());
         txtEmail.setText(deliverer.getEmail());
         txtSpreeAPIKey.setText(deliverer.getSpree_api_key());
 
-        loadAvatar();
+
     }
 
     private void loadAvatar(){
-        new ImageLoadTask(deliverer.getImages()[0].getLarge_url(), imgAvatar).execute();
+        String avatar_url;
+        if (deliverer.getImages().length>0)
+        {
+            avatar_url = deliverer.getImages()[0].getLarge_url();
+        } else
+        {
+            avatar_url = null;
+        }
+        imageLoader = MySingleton.getInstance().getImageLoader();
+        networkImageView.setImageUrl(avatar_url, imageLoader);
+        networkImageView.setDefaultImageResId(R.drawable.no_avatar);
+        networkImageView.setErrorImageResId(R.drawable.no_avatar);
+
     }
 
     private void controls() {
-        imgAvatar = (ImageView) findViewById(R.id.imgAvatar);
+//        imgAvatar = (ImageView) findViewById(R.id.imgAvatar);
         txtFirstname = (TextView) findViewById(R.id.txtFirstname);
         txtLastname = (TextView) findViewById(R.id.txtLastname);
         txtEmail = (TextView) findViewById(R.id.txtEmail);
         txtSpreeAPIKey = (TextView) findViewById(R.id.txtSpreeAPIKey);
+        networkImageView = (NetworkImageView) findViewById(R.id.networkImageView);
     }
 }

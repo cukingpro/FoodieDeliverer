@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,12 +27,14 @@ public class ProfileActivity extends AppCompatActivity {
     private Deliverer deliverer;
     private ImageLoader imageLoader;
     private NetworkImageView networkImageView;
+    private Button btnNextOrders;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         controls();
+        events();
 
         loadDeliverer();
 
@@ -72,5 +76,16 @@ public class ProfileActivity extends AppCompatActivity {
         txtEmail = (TextView) findViewById(R.id.txtEmail);
         txtSpreeAPIKey = (TextView) findViewById(R.id.txtSpreeAPIKey);
         networkImageView = (NetworkImageView) findViewById(R.id.networkImageView);
+        btnNextOrders = (Button) findViewById(R.id.btnNextOrders);
+    }
+
+    public void events(){
+        btnNextOrders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileActivity.this, OrderActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

@@ -7,6 +7,8 @@ import java.io.Serializable;
  */
 public class Deliverer implements Serializable {
 
+    private static Deliverer instance;
+
     private int id;
     private String first_name;
     private String last_name;
@@ -14,6 +16,17 @@ public class Deliverer implements Serializable {
     private String email;
     private Image[] images;
 
+    public static synchronized Deliverer getInstance() {
+//        if (instance == null) {
+//            instance = new Deliverer();
+//        }
+        return instance;
+
+    }
+
+    private Deliverer(){
+        instance = this;
+    }
   
     public int getId() {
         return id;

@@ -42,7 +42,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void loadDeliverer() {
         Intent intent = getIntent();
-        deliverer = (Deliverer) intent.getSerializableExtra("Deliverer");
+//        deliverer = (Deliverer) intent.getSerializableExtra("Deliverer");
+        deliverer = Deliverer.getInstance();
 
         loadAvatar();
         txtFirstname.setText(deliverer.getFirst_name());

@@ -29,7 +29,7 @@ import model.Deliverer;
 
 public class SignInActivity extends AppCompatActivity {
 
-    public static final String SIGNIN_URL = "http://foodie-2016-back.herokuapp.com/api/login.json";
+    public static final String SIGNIN_URL = "http://foodie-2016-back.herokuapp.com/api/login";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_PASSWORD = "password";
 
@@ -45,9 +45,25 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        controls();
+        events();
+
+
+
+    }
+
+    private void openHome(){
+        Intent intent = new Intent(this, TestActivity.class);
+        startActivity(intent);
+    }
+
+    public void controls(){
         edtEmail = (EditText) findViewById(R.id.edtEmail);
         edtPassword = (EditText) findViewById(R.id.edtPassword);
         btnSignIn = (Button) findViewById(R.id.btnSignIn);
+    }
+
+    public void events(){
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,14 +76,12 @@ public class SignInActivity extends AppCompatActivity {
                 params.put(KEY_PASSWORD, password);
                 JSONObject jsonObj = new JSONObject(params);
 
-
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, SIGNIN_URL, jsonObj,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-//                                Toast.makeText(SignInActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
                                 deliverer = new Gson().fromJson(response.toString(), Deliverer.class);
-                                openProfile();
+                                openHome();
                             }
                         },
                         new Response.ErrorListener() {
@@ -84,18 +98,8 @@ public class SignInActivity extends AppCompatActivity {
                         }
                 );
 
-
-//                RequestQueue requestQueue = VolleySingleton.getIntence().getRequestQueue();
-//                requestQueue.add(jsonObjectRequest);
                 MySingleton.getInstance().addToRequestQueue(jsonObjectRequest);
             }
         });
-
-    }
-
-    private void openProfile(){
-        Intent intent = new Intent(this, ProfileActivity.class);
-        intent.putExtra("Deliverer", (Serializable) deliverer);
-        startActivity(intent);
     }
 }

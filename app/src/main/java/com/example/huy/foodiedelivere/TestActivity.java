@@ -16,7 +16,7 @@ import model.Deliverer;
 
 public class TestActivity extends AppCompatActivity {
 
-    public static final String  menu[] = {"Profile", "History Orders", "Next Orders"};
+    public static final String  menu[] = {"Profile", "Available Shipments", "History Shipments", "Next Shipments"};
 
     private ListView lv;
     private DrawerLayout drawer;
@@ -40,7 +40,11 @@ public class TestActivity extends AppCompatActivity {
 
     private void selectItem(int position) {
        switch(position){
-           case 0: openProfile();
+           case 0:
+               openProfile();
+               break;
+           case 1:
+               openAvailableShipments();
                break;
            default:
                break;
@@ -51,6 +55,11 @@ public class TestActivity extends AppCompatActivity {
 
     public void openProfile(){
         Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    public void openAvailableShipments(){
+        Intent intent = new Intent(this, AvailableShipmentsActivity.class);
         startActivity(intent);
     }
 }

@@ -26,7 +26,8 @@
         <activity android:name=".ProfileActivity" />
         <activity android:name=".OrderActivity" />
         <activity android:name=".OrderDetailActivity" />
-        <activity android:name=".TestActivity"></activity>
+        <activity android:name=".TestActivity" />
+        <activity android:name=".AvailableShipmentsActivity"></activity>
     </application>
 
 </manifest>

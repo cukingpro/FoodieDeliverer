@@ -1,9 +1,11 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * Created by KING on 5/19/2016.
  */
-public class Address {
+public class Address implements Serializable {
 
     private int id;
     private String title;
@@ -89,5 +91,13 @@ public class Address {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getFullname(){
+        return firstname+" "+lastname;
+    }
+
+    public String getAddress(){
+        return address1+", "+city+", "+state+", "+country;
     }
 }

@@ -41,8 +41,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void loadDeliverer() {
-        Intent intent = getIntent();
-//        deliverer = (Deliverer) intent.getSerializableExtra("Deliverer");
         deliverer = Deliverer.getInstance();
 
         loadAvatar();
@@ -71,7 +69,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void controls() {
-//        imgAvatar = (ImageView) findViewById(R.id.imgAvatar);
         txtFirstname = (TextView) findViewById(R.id.txtFirstname);
         txtLastname = (TextView) findViewById(R.id.txtLastname);
         txtEmail = (TextView) findViewById(R.id.txtEmail);

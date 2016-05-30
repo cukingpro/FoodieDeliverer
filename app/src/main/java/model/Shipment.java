@@ -1,18 +1,19 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by huy on 25/04/2016.
  */
-public class Shipment {
+public class Shipment implements Serializable {
 
     private int id;
     private String number;
     private Date date_delivery;
     private String time_frame;
     private Address address;
-    private Manifest manifest;
+    private Manifest[] manifest;
 
     public int getId() {
         return id;
@@ -38,11 +39,11 @@ public class Shipment {
         this.address = address;
     }
 
-    public Manifest getManifest() {
+    public Manifest[] getManifest() {
         return manifest;
     }
 
-    public void setManifest(Manifest manifest) {
+    public void setManifest(Manifest[] manifest) {
         this.manifest = manifest;
     }
 
@@ -61,4 +62,14 @@ public class Shipment {
     public void setTime_frame(String time_frame) {
         this.time_frame = time_frame;
     }
+
+    @Override
+    public String toString() {
+        return number;
+    }
+
+    public String getDeliveryTime(){
+        return time_frame+", "+date_delivery;
+    }
+
 }

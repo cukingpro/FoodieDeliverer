@@ -1,9 +1,11 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * Created by huy on 27/05/2016.
  */
-public class Manifest {
+public class Manifest implements Serializable{
 
     private Product product;
     private int quantity;

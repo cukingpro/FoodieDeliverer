@@ -29,7 +29,7 @@ import model.Deliverer;
 
 public class SignInActivity extends AppCompatActivity {
 
-    public static final String SIGNIN_URL = "http://foodie-2016-back.herokuapp.com/api/login";
+    public static final String SIGNIN_URL = "http://foodie-2016-back.herokuapp.com/api/deliverer_login";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_PASSWORD = "password";
 
@@ -47,8 +47,6 @@ public class SignInActivity extends AppCompatActivity {
 
         controls();
         events();
-
-
 
     }
 
@@ -70,35 +68,31 @@ public class SignInActivity extends AppCompatActivity {
                 final String email = edtEmail.getText().toString().trim();
                 final String password = edtPassword.getText().toString().trim();
 
-                //params
-                Map<String, String> params = new HashMap<String, String>();
-                params.put(KEY_EMAIL, email);
-                params.put(KEY_PASSWORD, password);
-                JSONObject jsonObj = new JSONObject(params);
-
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, SIGNIN_URL, jsonObj,
-                        new Response.Listener<JSONObject>() {
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, SIGNIN_URL,
+                        new Response.Listener<String>() {
                             @Override
-                            public void onResponse(JSONObject response) {
-                                deliverer = new Gson().fromJson(response.toString(), Deliverer.class);
+                            public void onResponse(String response) {
+                                deliverer = new Gson().fromJson(response, Deliverer.class);
                                 openHome();
                             }
                         },
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                String errorMessage = null;
-                                try {
-                                    errorMessage = new String(error.networkResponse.data, "UTF-8");
-                                } catch (UnsupportedEncodingException e) {
-                                    e.printStackTrace();
-                                }
-                                Toast.makeText(SignInActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignInActivity.this, "Email or Password is wrong", Toast.LENGTH_SHORT).show();
                             }
-                        }
-                );
+                        })
+                {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put(KEY_EMAIL, email);
+                        params.put(KEY_PASSWORD, password);
+                        return params;
+                    }
+                };
 
-                MySingleton.getInstance().addToRequestQueue(jsonObjectRequest);
+                MySingleton.getInstance().addToRequestQueue(stringRequest);
             }
         });
     }

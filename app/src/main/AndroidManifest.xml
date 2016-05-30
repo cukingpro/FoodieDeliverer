@@ -27,7 +27,8 @@
         <activity android:name=".OrderActivity" />
         <activity android:name=".OrderDetailActivity" />
         <activity android:name=".TestActivity" />
-        <activity android:name=".AvailableShipmentsActivity"></activity>
+        <activity android:name=".AvailableShipmentsActivity" />
+        <activity android:name=".ShipmentDetailActivity"></activity>
     </application>
 
 </manifest>
